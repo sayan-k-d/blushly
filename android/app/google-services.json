@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "657119569039",
+    "project_id": "blushlyselling",
+    "storage_bucket": "blushlyselling.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:657119569039:android:6d019adff454ad3758bcfa",
+        "android_client_info": {
+          "package_name": "com.blushly.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBLyiXdodm-a1ZUAvhCHsIz56sj8zMgnbA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
