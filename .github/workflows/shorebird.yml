@@ -31,7 +31,7 @@ jobs:
       - name: Authenticate Shorebird
         env:
           SHOREBIRD_TOKEN: ${{ secrets.SHOREBIRD_TOKEN }}
-        run: shorebird login --token $SHOREBIRD_TOKEN
+        run: shorebird login:ci --token "$SHOREBIRD_TOKEN"
 
       - name: Flutter Pub Get
         run: flutter pub get
