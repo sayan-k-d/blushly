@@ -28,6 +28,10 @@ jobs:
           curl --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/shorebirdtech/install/main/install.sh | bash
           echo "$HOME/.shorebird/bin" >> $GITHUB_PATH
 
+      - name: Verify Shorebird installation
+        run: |
+          which shorebird
+          shorebird --version
       - name: Authenticate Shorebird
         env:
           SHOREBIRD_TOKEN: ${{ secrets.SHOREBIRD_TOKEN }}
