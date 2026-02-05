@@ -25,6 +25,7 @@ class RestockHistoryDetailSheet extends ConsumerWidget {
         }
 
         final items = snapshot.data!;
+        final isDark = Theme.of(context).brightness == Brightness.dark;
 
         return DraggableScrollableSheet(
           expand: false,
@@ -34,8 +35,8 @@ class RestockHistoryDetailSheet extends ConsumerWidget {
           builder: (_, controller) {
             return Container(
               padding: const EdgeInsets.all(16),
-              decoration: const BoxDecoration(
-                color: Colors.white,
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.onPrimary,
                 borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
               ),
               child: Column(
@@ -48,7 +49,7 @@ class RestockHistoryDetailSheet extends ConsumerWidget {
                       width: 40,
                       margin: const EdgeInsets.only(bottom: 12),
                       decoration: BoxDecoration(
-                        color: Colors.grey[300],
+                        color: Theme.of(context).colorScheme.onTertiaryFixed,
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
@@ -85,9 +86,14 @@ class RestockHistoryDetailSheet extends ConsumerWidget {
                         return Container(
                           padding: const EdgeInsets.all(14),
                           decoration: BoxDecoration(
-                            color: Colors.grey[50],
+                            color: Theme.of(context).colorScheme.surface,
                             borderRadius: BorderRadius.circular(14),
-                            border: Border.all(color: Colors.grey.shade200),
+                            border: Border.all(
+                              color:
+                                  isDark
+                                      ? Colors.grey.shade700
+                                      : Colors.grey.shade200,
+                            ),
                           ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -124,14 +130,20 @@ class RestockHistoryDetailSheet extends ConsumerWidget {
                                     "Purchase Price: ₹$price",
                                     style: TextStyle(
                                       fontSize: 12,
-                                      color: Colors.grey[700],
+                                      color:
+                                          isDark
+                                              ? Colors.grey[500]
+                                              : Colors.grey[700],
                                     ),
                                   ),
                                   Text(
                                     _formatDateTime(r['created_at']),
                                     style: TextStyle(
                                       fontSize: 12,
-                                      color: Colors.grey[600],
+                                      color:
+                                          isDark
+                                              ? Colors.grey[500]
+                                              : Colors.grey[600],
                                     ),
                                   ),
                                 ],

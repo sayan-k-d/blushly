@@ -74,7 +74,7 @@ class QuickActionTile extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.w600,
-                      color: Colors.grey[900],
+                      // color: Colors.grey[900],
                     ),
                   ),
                 ],

@@ -24,12 +24,16 @@ class SaleDetailRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: Colors.grey[50],
+        color: Theme.of(context).colorScheme.surface,
+
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(color: Colors.grey.shade200),
+        border: Border.all(
+          color: isDark ? Colors.grey.shade700 : Colors.grey.shade200,
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,13 +46,20 @@ class SaleDetailRow extends StatelessWidget {
                 children: [
                   Text(
                     "Qty: $quantity",
-                    style: const TextStyle(fontWeight: FontWeight.w600),
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      color: isDark ? Colors.grey[500] : Colors.grey[700],
+                    ),
                   ),
                   const SizedBox(width: 8),
                   if (isDue)
                     Text(
                       "(Due: ₹$dueAmount)",
-                      style: const TextStyle(fontSize: 12, color: Colors.red),
+                      style: TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                        color: isDark ? Colors.pink.shade400 : Colors.red,
+                      ),
                     ),
                 ],
               ),
@@ -79,13 +90,16 @@ class SaleDetailRow extends StatelessWidget {
                         margin: const EdgeInsets.only(right: 6),
                         padding: const EdgeInsets.all(4),
                         decoration: BoxDecoration(
-                          color: Colors.red.withOpacity(0.15),
+                          color:
+                              isDark
+                                  ? Colors.pink.withOpacity(0.15)
+                                  : Colors.red.withOpacity(0.15),
                           borderRadius: BorderRadius.circular(6),
                         ),
-                        child: const Icon(
+                        child: Icon(
                           Icons.schedule,
                           size: 14,
-                          color: Colors.red,
+                          color: isDark ? Colors.pink : Colors.red,
                         ),
                       ),
                     ),
@@ -109,15 +123,24 @@ class SaleDetailRow extends StatelessWidget {
             children: [
               Text(
                 "Price: ₹$price",
-                style: TextStyle(fontSize: 12, color: Colors.grey[700]),
+                style: TextStyle(
+                  fontSize: 12,
+                  color: isDark ? Colors.grey[500] : Colors.grey[700],
+                ),
               ),
               Text(
                 "Profit: ₹$profit",
-                style: const TextStyle(fontSize: 12, color: Colors.blueGrey),
+                style: TextStyle(
+                  fontSize: 12,
+                  color: isDark ? Colors.grey[500] : Colors.grey[700],
+                ),
               ),
               Text(
                 _formatTime(time),
-                style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+                style: TextStyle(
+                  fontSize: 12,
+                  color: isDark ? Colors.grey[500] : Colors.grey[700],
+                ),
               ),
             ],
           ),

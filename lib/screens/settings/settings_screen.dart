@@ -105,6 +105,7 @@ class SettingsScreen extends ConsumerWidget {
               );
             },
           ),
+          SizedBox(height: 12),
 
           SettingsTile(
             icon: Icons.restore,
@@ -182,19 +183,19 @@ class SettingsScreen extends ConsumerWidget {
               // await showRestartRequiredDialog(context);
             },
           ),
-          const SizedBox(height: 24),
 
-          SectionHeader("Inventory"),
+          // const SizedBox(height: 24),
 
-          SettingsTile(
-            icon: Icons.warning,
-            title: "Low stock threshold",
-            subtitle: "Default stock alert quantity",
-            onTap: () {
-              // open threshold dialog
-            },
-          ),
+          // SectionHeader("Inventory"),
 
+          // SettingsTile(
+          //   icon: Icons.warning,
+          //   title: "Low stock threshold",
+          //   subtitle: "Default stock alert quantity",
+          //   onTap: () {
+          //     // open threshold dialog
+          //   },
+          // ),
           const SizedBox(height: 24),
 
           SectionHeader("About"),

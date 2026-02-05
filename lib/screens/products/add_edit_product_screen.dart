@@ -41,6 +41,7 @@ class _AddEditProductScreenState extends ConsumerState<AddEditProductScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final categoriesAsync = ref.watch(categoryListProvider);
 
     return Scaffold(
@@ -108,6 +109,14 @@ class _AddEditProductScreenState extends ConsumerState<AddEditProductScreen> {
 
             const SizedBox(height: 24),
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor:
+                    isDark
+                        ? Theme.of(context).colorScheme.onTertiaryFixed
+                        : null,
+                foregroundColor:
+                    isDark ? Theme.of(context).colorScheme.onSurface : null,
+              ),
               onPressed: () async {
                 if (_selectedCategory == null) return;
 

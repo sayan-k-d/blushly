@@ -19,7 +19,13 @@ class SettingsTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = isDestructive ? Colors.red : Colors.black;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final color =
+        isDestructive
+            ? Colors.red
+            : isDark
+            ? Theme.of(context).colorScheme.secondary
+            : Colors.black;
 
     return ListTile(
       leading: Icon(icon, color: color),
@@ -28,7 +34,10 @@ class SettingsTile extends StatelessWidget {
       trailing: showArrow ? const Icon(Icons.chevron_right) : null,
       onTap: onTap,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      tileColor: Colors.grey.shade100,
+      tileColor:
+          isDark
+              ? Theme.of(context).colorScheme.onPrimary
+              : Colors.grey.shade100,
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
     );
   }

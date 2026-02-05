@@ -18,6 +18,7 @@ class ProductListTab extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final productsAsync = ref.watch(filteredProductListProvider);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
       // appBar: AppBar(title: const Text("Products"), centerTitle: false),
@@ -100,7 +101,8 @@ class ProductListTab extends ConsumerWidget {
 
                       return Container(
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          // color: Colors.white,
+                          color: Theme.of(context).colorScheme.onPrimary,
                           borderRadius: BorderRadius.circular(16),
                           boxShadow: [
                             BoxShadow(
@@ -122,6 +124,12 @@ class ProductListTab extends ConsumerWidget {
                                 decoration: BoxDecoration(
                                   color: Colors.pink.withOpacity(0.12),
                                   borderRadius: BorderRadius.circular(12),
+                                  border: Border.all(
+                                    color:
+                                        isDark
+                                            ? Color(0xFF713240)
+                                            : Colors.transparent,
+                                  ),
                                 ),
                                 child: const Icon(
                                   Icons.shopping_bag,

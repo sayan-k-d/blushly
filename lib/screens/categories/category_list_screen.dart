@@ -9,6 +9,7 @@ class CategoryListScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final categoryAsync = ref.watch(categoryListProvider);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
       appBar: AppBar(title: const Text("Categories"), centerTitle: false),
@@ -25,7 +26,7 @@ class CategoryListScreen extends ConsumerWidget {
       body: Column(
         children: [
           Container(
-            color: const Color(0xFFFFF5F7),
+            color: Theme.of(context).scaffoldBackgroundColor,
             padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
             child: TextField(
               decoration: const InputDecoration(
@@ -57,47 +58,48 @@ class CategoryListScreen extends ConsumerWidget {
                   if (filtered.isEmpty) {
                     return const Center(child: Text("No categories found"));
                   }
-                  return ListView.builder(
+                  return ListView.separated(
                     itemCount: filtered.length,
+                    separatorBuilder: (_, __) => const SizedBox(height: 12),
                     itemBuilder: (_, i) {
                       final category = filtered[i];
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 12.0),
-                        child: ListTile(
-                          tileColor: Colors.yellow.withOpacity(0.15),
-                          leading: const Icon(Icons.category),
-                          title: Text(category.name),
-                          trailing: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              IconButton(
-                                icon: const Icon(Icons.edit),
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder:
-                                          (_) => AddEditCategoryScreen(
-                                            category: category,
-                                          ),
-                                    ),
-                                  );
-                                },
-                              ),
-                              IconButton(
-                                icon: const Icon(
-                                  Icons.delete,
-                                  color: Colors.red,
-                                ),
-                                onPressed: () async {
-                                  await ref
-                                      .read(categoryRepositoryProvider)
-                                      .deleteCategory(category.id!);
-                                  ref.invalidate(categoryListProvider);
-                                },
-                              ),
-                            ],
-                          ),
+                      return ListTile(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadiusGeometry.circular(24),
+                        ),
+                        tileColor:
+                            isDark
+                                ? Theme.of(context).colorScheme.onPrimary
+                                : Colors.pink.withOpacity(0.12),
+                        leading: const Icon(Icons.category),
+                        title: Text(category.name),
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            IconButton(
+                              icon: const Icon(Icons.edit),
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder:
+                                        (_) => AddEditCategoryScreen(
+                                          category: category,
+                                        ),
+                                  ),
+                                );
+                              },
+                            ),
+                            IconButton(
+                              icon: const Icon(Icons.delete, color: Colors.red),
+                              onPressed: () async {
+                                await ref
+                                    .read(categoryRepositoryProvider)
+                                    .deleteCategory(category.id!);
+                                ref.invalidate(categoryListProvider);
+                              },
+                            ),
+                          ],
                         ),
                       );
                     },

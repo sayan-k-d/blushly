@@ -31,90 +31,102 @@ class _RestockSheetState extends ConsumerState<RestockSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(
-        left: 16,
-        right: 16,
-        top: 16,
-        bottom: MediaQuery.of(context).viewInsets.bottom + 16,
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            "Restock ${selectedProduct?.name ?? "Product"}",
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-          ),
-
-          const SizedBox(height: 16),
-          if (widget.product == null)
-            ProductSelector(
-              selectedProduct: selectedProduct,
-              onSelected: (product) {
-                setState(() {
-                  selectedProduct = product;
-                });
-              },
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    return Ink(
+      decoration: BoxDecoration(color: Theme.of(context).colorScheme.surface),
+      child: Padding(
+        padding: EdgeInsets.only(
+          left: 16,
+          right: 16,
+          top: 16,
+          bottom: MediaQuery.of(context).viewInsets.bottom + 16,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              "Restock ${selectedProduct?.name ?? "Product"}",
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
             ),
-          const SizedBox(height: 12),
 
-          TextField(
-            controller: qtyController,
-            keyboardType: TextInputType.number,
-            decoration: const InputDecoration(labelText: "Quantity to add"),
-          ),
+            const SizedBox(height: 16),
+            if (widget.product == null)
+              ProductSelector(
+                selectedProduct: selectedProduct,
+                onSelected: (product) {
+                  setState(() {
+                    selectedProduct = product;
+                  });
+                },
+              ),
+            const SizedBox(height: 12),
 
-          const SizedBox(height: 12),
-
-          TextField(
-            controller: priceController,
-            keyboardType: TextInputType.number,
-            decoration: const InputDecoration(
-              labelText: "Purchase price (optional)",
+            TextField(
+              controller: qtyController,
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(labelText: "Quantity to add"),
             ),
-          ),
 
-          const SizedBox(height: 20),
+            const SizedBox(height: 12),
 
-          SizedBox(
-            width: double.infinity,
-            height: 48,
-            child: ElevatedButton(
-              onPressed: () async {
-                final qty = int.tryParse(qtyController.text) ?? 0;
-                if (qty <= 0) return;
-
-                final enteredPrice = double.tryParse(priceController.text);
-
-                // ✅ FALLBACK LOGIC
-                final product = selectedProduct;
-                if (product == null) return;
-                final effectivePurchasePrice =
-                    enteredPrice ?? product.purchasePrice;
-
-                await ref
-                    .read(restockRepositoryProvider)
-                    .restockProduct(
-                      productId: product.id!,
-                      quantity: qty,
-                      purchasePrice: effectivePurchasePrice,
-                    );
-
-                ref.invalidate(productListProvider);
-                ref.invalidate(dashboardProvider);
-                ref.invalidate(restockHistoryProvider);
-                ref.invalidate(recentActivityProvider);
-
-                Navigator.pop(context);
-
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text("Stock updated successfully")),
-                );
-              },
-              child: const Text("CONFIRM RESTOCK"),
+            TextField(
+              controller: priceController,
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(
+                labelText: "Purchase price (optional)",
+              ),
             ),
-          ),
-        ],
+
+            const SizedBox(height: 20),
+
+            SizedBox(
+              width: double.infinity,
+              height: 48,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor:
+                      isDark
+                          ? Theme.of(context).colorScheme.onTertiaryFixed
+                          : null,
+                  foregroundColor:
+                      isDark ? Theme.of(context).colorScheme.onSurface : null,
+                ),
+                onPressed: () async {
+                  final qty = int.tryParse(qtyController.text) ?? 0;
+                  if (qty <= 0) return;
+
+                  final enteredPrice = double.tryParse(priceController.text);
+
+                  // ✅ FALLBACK LOGIC
+                  final product = selectedProduct;
+                  if (product == null) return;
+                  final effectivePurchasePrice =
+                      enteredPrice ?? product.purchasePrice;
+
+                  await ref
+                      .read(restockRepositoryProvider)
+                      .restockProduct(
+                        productId: product.id!,
+                        quantity: qty,
+                        purchasePrice: effectivePurchasePrice,
+                      );
+
+                  ref.invalidate(productListProvider);
+                  ref.invalidate(dashboardProvider);
+                  ref.invalidate(restockHistoryProvider);
+                  ref.invalidate(recentActivityProvider);
+
+                  Navigator.pop(context);
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text("Stock updated successfully")),
+                  );
+                },
+                child: const Text("CONFIRM RESTOCK"),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -9,6 +9,7 @@ class LowStockCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final isCritical = product.quantity <= (product.lowStockThreshold / 2);
 
     return Container(
@@ -62,7 +63,10 @@ class LowStockCard extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   "Stock: ${product.quantity} • Threshold: ${product.lowStockThreshold}",
-                  style: TextStyle(fontSize: 12, color: Colors.grey[700]),
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: isDark ? Colors.grey[500] : Colors.grey[700],
+                  ),
                 ),
               ],
             ),

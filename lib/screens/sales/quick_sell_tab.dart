@@ -62,6 +62,7 @@ class _QuickSellTabState extends ConsumerState<QuickSellTab> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     ref.listen<int>(quickSellResetProvider, (_, __) {
       _clearAll();
     });
@@ -86,12 +87,21 @@ class _QuickSellTabState extends ConsumerState<QuickSellTab> {
                       child: Container(
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
-                          color: Colors.pink.withOpacity(0.08),
+                          color:
+                              isDark
+                                  ? Colors.pink.withOpacity(0.12)
+                                  : Colors.pink.withOpacity(0.08),
                           borderRadius: BorderRadius.circular(16),
                         ),
                         child: Row(
                           children: [
-                            const Icon(Icons.search),
+                            Icon(
+                              Icons.search,
+                              color:
+                                  isDark
+                                      ? Theme.of(context).colorScheme.secondary
+                                      : null,
+                            ),
                             const SizedBox(width: 12),
                             Expanded(
                               child: Text(
@@ -102,11 +112,21 @@ class _QuickSellTabState extends ConsumerState<QuickSellTab> {
                                   color:
                                       selectedProduct == null
                                           ? Colors.grey
+                                          : isDark
+                                          ? Theme.of(
+                                            context,
+                                          ).colorScheme.secondary
                                           : Colors.black,
                                 ),
                               ),
                             ),
-                            const Icon(Icons.chevron_right),
+                            Icon(
+                              Icons.chevron_right,
+                              color:
+                                  isDark
+                                      ? Theme.of(context).colorScheme.secondary
+                                      : null,
+                            ),
                           ],
                         ),
                       ),
@@ -274,6 +294,14 @@ class _QuickSellTabState extends ConsumerState<QuickSellTab> {
               width: double.infinity,
               height: 52,
               child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor:
+                      isDark
+                          ? Theme.of(context).colorScheme.onTertiaryFixed
+                          : null,
+                  foregroundColor:
+                      isDark ? Theme.of(context).colorScheme.onSurface : null,
+                ),
                 onPressed:
                     selectedProduct == null
                         ? null
@@ -360,6 +388,7 @@ class _QuickSellTabState extends ConsumerState<QuickSellTab> {
     final product = await showModalBottomSheet(
       context: context,
       isScrollControlled: true,
+      useSafeArea: true,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),

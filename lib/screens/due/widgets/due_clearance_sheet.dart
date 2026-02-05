@@ -29,6 +29,7 @@ class _DueClearanceSheetState extends ConsumerState<DueClearanceSheet> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Padding(
       padding: EdgeInsets.only(
         left: 16,
@@ -47,7 +48,12 @@ class _DueClearanceSheetState extends ConsumerState<DueClearanceSheet> {
 
           const SizedBox(height: 6),
 
-          Text(widget.customerName, style: TextStyle(color: Colors.grey[700])),
+          Text(
+            widget.customerName,
+            style: TextStyle(
+              color: isDark ? Colors.grey[500] : Colors.grey[700],
+            ),
+          ),
 
           const SizedBox(height: 12),
 
@@ -92,6 +98,14 @@ class _DueClearanceSheetState extends ConsumerState<DueClearanceSheet> {
             width: double.infinity,
             height: 48,
             child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor:
+                    isDark
+                        ? Theme.of(context).colorScheme.onTertiaryFixed
+                        : null,
+                foregroundColor:
+                    isDark ? Theme.of(context).colorScheme.onSurface : null,
+              ),
               onPressed:
                   (enteredAmount == null || errorText != null)
                       ? null

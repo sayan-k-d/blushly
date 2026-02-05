@@ -24,7 +24,9 @@ class _AddEditCategoryScreenState extends ConsumerState<AddEditCategoryScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
         title: Text(widget.category == null ? "Add Category" : "Edit Category"),
       ),
@@ -38,6 +40,14 @@ class _AddEditCategoryScreenState extends ConsumerState<AddEditCategoryScreen> {
             ),
             const SizedBox(height: 20),
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor:
+                    isDark
+                        ? Theme.of(context).colorScheme.onTertiaryFixed
+                        : null,
+                foregroundColor:
+                    isDark ? Theme.of(context).colorScheme.onSurface : null,
+              ),
               onPressed: () async {
                 final name = _nameController.text.trim();
                 if (name.isEmpty) return;

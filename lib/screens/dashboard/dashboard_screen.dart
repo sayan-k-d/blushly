@@ -1,4 +1,5 @@
 import 'package:blushly/core/providers/auto_backup_provider.dart';
+import 'package:blushly/core/providers/theme_provider.dart';
 import 'package:blushly/core/widgets/entry_animate.dart';
 import 'package:blushly/screens/dashboard/providers/date_filter_provider.dart';
 import 'package:blushly/screens/dashboard/providers/recent_activity_provider.dart';
@@ -33,6 +34,7 @@ class DashboardScreen extends ConsumerWidget {
     final dashboardAsync = ref.watch(dashboardProvider);
     final productsAsync = ref.watch(productListProvider).value ?? [];
     final activitiesAsync = ref.watch(recentActivityProvider);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     // ref.listen(dashboardProvider, (_, __) {
     //   AutoBackupManager().runIfNeeded();
     // });
@@ -47,9 +49,24 @@ class DashboardScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Hello Shibangi"),
+        title: const Text("Hello"),
         centerTitle: false,
         actions: [
+          IconButton(
+            tooltip: "Toggle theme",
+            icon: Icon(
+              ref.watch(themeModeProvider) == ThemeMode.dark
+                  ? Icons.light_mode
+                  : Icons.dark_mode,
+            ),
+            onPressed: () {
+              final notifier = ref.read(themeModeProvider.notifier);
+              notifier.state =
+                  notifier.state == ThemeMode.dark
+                      ? ThemeMode.light
+                      : ThemeMode.dark;
+            },
+          ),
           IconButton(
             onPressed: () {
               Navigator.of(

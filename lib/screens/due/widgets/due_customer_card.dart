@@ -9,6 +9,7 @@ class DueCustomerCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final amount = data['total_due'] as num;
 
     return InkWell(
@@ -31,7 +32,10 @@ class DueCustomerCard extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: Colors.red.withOpacity(0.05),
+          color:
+              isDark
+                  ? Colors.pink.withOpacity(0.15)
+                  : Colors.red.withOpacity(0.05),
           borderRadius: BorderRadius.circular(18),
           border: Border.all(color: Colors.red.withOpacity(0.3)),
         ),
@@ -42,10 +46,16 @@ class DueCustomerCard extends StatelessWidget {
               height: 48,
               width: 48,
               decoration: BoxDecoration(
-                color: Colors.red.withOpacity(0.15),
+                color:
+                    isDark
+                        ? Colors.pink.withOpacity(0.15)
+                        : Colors.red.withOpacity(0.15),
                 borderRadius: BorderRadius.circular(14),
               ),
-              child: const Icon(Icons.person, color: Colors.red),
+              child: Icon(
+                Icons.person,
+                color: isDark ? Colors.pink : Colors.red,
+              ),
             ),
 
             const SizedBox(width: 14),
@@ -57,7 +67,8 @@ class DueCustomerCard extends StatelessWidget {
                 children: [
                   Text(
                     data['customer_name'] ?? "Unknown",
-                    style: const TextStyle(
+                    style: TextStyle(
+                      color: isDark ? Colors.white : null,
                       fontSize: 15,
                       fontWeight: FontWeight.w600,
                     ),
@@ -65,7 +76,10 @@ class DueCustomerCard extends StatelessWidget {
                   if (data['customer_phone'] != null)
                     Text(
                       data['customer_phone'],
-                      style: TextStyle(fontSize: 12, color: Colors.grey[700]),
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: isDark ? Colors.grey[500] : Colors.grey[700],
+                      ),
                     ),
                   const SizedBox(height: 4),
                   Row(
@@ -85,7 +99,7 @@ class DueCustomerCard extends StatelessWidget {
                           style: TextStyle(
                             overflow: TextOverflow.ellipsis,
                             fontSize: 12,
-                            color: Colors.red.shade700,
+                            color: isDark ? Colors.red : Colors.red.shade700,
                           ),
                         ),
                       ),

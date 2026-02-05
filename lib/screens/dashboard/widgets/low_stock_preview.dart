@@ -10,6 +10,7 @@ class LowStockPreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final lowStockProducts = products.where((p) => p.isLowStock).toList();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -35,7 +36,10 @@ class LowStockPreview extends StatelessWidget {
               margin: const EdgeInsets.symmetric(vertical: 6),
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: Colors.red.withOpacity(0.05),
+                color:
+                    isDark
+                        ? Colors.pink.withOpacity(0.08)
+                        : Colors.red.withOpacity(0.05),
                 borderRadius: BorderRadius.circular(14),
                 border: Border.all(color: Colors.red.withOpacity(0.35)),
               ),
@@ -46,13 +50,16 @@ class LowStockPreview extends StatelessWidget {
                     height: 36,
                     width: 36,
                     decoration: BoxDecoration(
-                      color: Colors.red.withOpacity(0.15),
+                      color:
+                          isDark
+                              ? Colors.pink.withOpacity(0.15)
+                              : Colors.red.withOpacity(0.15),
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: const Icon(
+                    child: Icon(
                       Icons.warning_amber_rounded,
                       size: 18,
-                      color: Colors.red,
+                      color: isDark ? Colors.pink : Colors.red,
                     ),
                   ),
 
@@ -73,7 +80,7 @@ class LowStockPreview extends StatelessWidget {
                           "Below minimum stock level",
                           style: TextStyle(
                             fontSize: 11,
-                            color: Colors.red.shade700,
+                            color: isDark ? Colors.pink : Colors.red.shade700,
                           ),
                         ),
                       ],
@@ -87,15 +94,18 @@ class LowStockPreview extends StatelessWidget {
                       vertical: 4,
                     ),
                     decoration: BoxDecoration(
-                      color: Colors.red.withOpacity(0.12),
+                      color:
+                          isDark
+                              ? Colors.pink.withOpacity(0.12)
+                              : Colors.red.withOpacity(0.12),
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Text(
                       "${p.quantity} left",
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
-                        color: Colors.red,
+                        color: isDark ? Colors.pink : Colors.red,
                       ),
                     ),
                   ),

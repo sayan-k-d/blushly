@@ -17,6 +17,7 @@ class SellHistoryDetailSheet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final asyncSales = ref.watch(
       sellHistoryDetailProvider((productId: productId, saleDate: saleDate)),
     );
@@ -29,8 +30,8 @@ class SellHistoryDetailSheet extends ConsumerWidget {
       builder: (_, controller) {
         return Container(
           padding: const EdgeInsets.all(16),
-          decoration: const BoxDecoration(
-            color: Colors.white,
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.onPrimary,
             borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
           ),
           child: Column(
@@ -43,7 +44,7 @@ class SellHistoryDetailSheet extends ConsumerWidget {
                   width: 40,
                   margin: const EdgeInsets.only(bottom: 12),
                   decoration: BoxDecoration(
-                    color: Colors.grey[300],
+                    color: isDark ? Colors.grey.shade700 : Colors.grey.shade200,
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
@@ -52,7 +53,8 @@ class SellHistoryDetailSheet extends ConsumerWidget {
               // Header
               Text(
                 productName,
-                style: const TextStyle(
+                style: TextStyle(
+                  color: isDark ? Colors.grey[500] : Colors.grey[700],
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
                 ),
@@ -60,7 +62,10 @@ class SellHistoryDetailSheet extends ConsumerWidget {
               const SizedBox(height: 4),
               Text(
                 "Sales on $saleDate",
-                style: TextStyle(fontSize: 13, color: Colors.grey[600]),
+                style: TextStyle(
+                  fontSize: 13,
+                  color: isDark ? Colors.grey[500] : Colors.grey[700],
+                ),
               ),
 
               const SizedBox(height: 16),

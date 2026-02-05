@@ -1,4 +1,5 @@
 import 'package:blushly/core/providers/auto_backup_provider.dart';
+import 'package:blushly/core/providers/theme_provider.dart';
 import 'package:blushly/core/theme/app_theme.dart';
 import 'package:blushly/data/db/app_database.dart';
 import 'package:blushly/screens/splash/birthday_splash.dart';
@@ -37,6 +38,8 @@ class _MyAppState extends ConsumerState<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      themeMode: ref.watch(themeModeProvider),
 
       // ✅ CONDITIONAL RENDERING
       home: isBirthday ? const BirthdaySplash() : const SplashScreen(),

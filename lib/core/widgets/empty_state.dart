@@ -14,14 +14,18 @@ class EmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       height: 120, // ≈ 2 list tiles
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.grey.shade100,
+        color: Theme.of(context).colorScheme.surface, // Colors.grey.shade100,
+
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.grey.shade300),
+        border: Border.all(
+          color: isDark ? Colors.grey.shade700 : Colors.grey.shade300,
+        ),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -33,6 +37,10 @@ class EmptyState extends StatelessWidget {
             decoration: BoxDecoration(
               color: Colors.pink.withOpacity(0.15),
               borderRadius: BorderRadius.circular(14),
+              border: Border.all(
+                color: isDark ? Color(0xFF713240) : Colors.transparent,
+                width: 2,
+              ),
             ),
             child: Icon(icon, color: Colors.pink, size: 24),
           ),
