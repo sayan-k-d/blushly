@@ -25,23 +25,24 @@ jobs:
 
       - name: Install Shorebird
         run: |
-          curl --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/shorebirdtech/install/main/install.sh | bash
+          curl -sSf https://raw.githubusercontent.com/shorebirdtech/install/main/install.sh | bash
           echo "$HOME/.shorebird/bin" >> $GITHUB_PATH
 
-      - name: Verify Shorebird installation
+      - name: Verify Shorebird
         run: |
-          which shorebird
-          shorebird --version
+          ls -la $HOME/.shorebird/bin
+          $HOME/.shorebird/bin/shorebird --version
+
       - name: Authenticate Shorebird
         env:
           SHOREBIRD_TOKEN: ${{ secrets.SHOREBIRD_TOKEN }}
-        run: shorebird login:ci --token "$SHOREBIRD_TOKEN"
+        run: $HOME/.shorebird/bin/shorebird login:ci --token "$SHOREBIRD_TOKEN"
 
       - name: Flutter Pub Get
         run: flutter pub get
 
       - name: Build Android (Release)
-        run: shorebird release android --artifact=apk
+        run: $HOME/.shorebird/bin/shorebird release android --artifact=apk
 
       - name: Create Patch (OTA)
-        run: shorebird patch android
+        run: $HOME/.shorebird/bin/shorebird patch android
