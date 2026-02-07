@@ -19,7 +19,7 @@ class CustomBottomNav extends ConsumerWidget {
         ref.read(bottomNavIndexProvider.notifier).state = index;
       },
       animationCurve: Curves.easeInOut,
-      backgroundColor: isDark ? const Color(0xFF470A1F) : Colors.pink,
+      backgroundColor: isDark ? const Color(0xFF470A1F) : Colors.white,
       iconSize: 25,
       items: [
         FlashyTabBarItem(
