@@ -25,8 +25,20 @@ jobs:
 
       - name: Install Shorebird
         run: |
-          curl -sSf https://raw.githubusercontent.com/shorebirdtech/install/main/install.sh | bash
-          echo "$HOME/.shorebird/bin" >> $GITHUB_PATH
+          set -euxo pipefail
+
+          # Ensure prerequisites
+          sudo apt-get update
+          sudo apt-get install -y curl unzip
+
+          # Install Shorebird
+          curl -fsSL https://raw.githubusercontent.com/shorebirdtech/install/main/install.sh -o install_shorebird.sh
+          bash install_shorebird.sh
+
+          # Verify install directory
+          ls -la $HOME
+          ls -la $HOME/.shorebird
+          ls -la $HOME/.shorebird/bin
 
       - name: Verify Shorebird
         run: |
