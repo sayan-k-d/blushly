@@ -18,7 +18,7 @@ class CustomBottomNav extends ConsumerWidget {
       onItemSelected: (index) {
         ref.read(bottomNavIndexProvider.notifier).state = index;
       },
-      animationCurve: Curves.fastOutSlowIn,
+      animationCurve: Curves.easeInOut,
       backgroundColor: isDark ? const Color(0xFF470A1F) : Colors.white,
       iconSize: 25,
       items: [
